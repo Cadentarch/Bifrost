@@ -13,12 +13,9 @@ import io.ktor.client.*
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.HttpTimeoutConfig
 
-val globalHttpClient: HttpClient = HttpClient {
-    this.followRedirects = true
-    this.expectSuccess = false
+expect fun createPlatformHttpClient(): HttpClient
 
-    install(HttpTimeout)
-}
+val globalHttpClient: HttpClient = createPlatformHttpClient()
 
 val ketch: Ketch = Ketch(
     httpEngine = KtorHttpEngine(globalHttpClient.config {

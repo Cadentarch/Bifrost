@@ -19,7 +19,6 @@ val javaVersionEnum: JavaVersion = rootProject.extra["javaVersionEnum"] as JavaV
 kotlin {
     jvmToolchain {
         this.languageVersion.set(JavaLanguageVersion.of(javaVersionEnum.toString().toInt()))
-        this.vendor.set(JvmVendorSpec.MICROSOFT)
     }
 
     jvm {
@@ -78,6 +77,7 @@ compose.desktop {
         nativeDistributions {
             modules("jdk.crypto.ec")
             modules("java.management")
+            modules("java.sql")
             modules("jdk.accessibility")
 
             this.packageName = packageName
