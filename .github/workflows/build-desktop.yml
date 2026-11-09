@@ -17,13 +17,19 @@ jobs:
           - os: ubuntu-24.04
             name: linux
             tasks: packageUberJarForCurrentOS packageDeb
+            container: debian:trixie
           - os: windows-latest
             name: windows
             tasks: packageUberJarForCurrentOS packageExe
     runs-on: ${{ matrix.os }}
+    container: ${{ matrix.container || '' }}
     name: Build ${{ matrix.name }}
 
     steps:
+      - name: Install container dependencies
+        if: matrix.container
+        run: apt-get update && apt-get install -y git fakeroot binutils file
+
       - name: Checkout
         uses: actions/checkout@v5
 
